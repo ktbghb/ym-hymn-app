@@ -59,8 +59,7 @@
             //   title: "1장 만복의 근원 하나님", 
             //   url: "https://raw.githubusercontent.com/사용자아이디/저장소이름/main/파일명.mp3" 
             // },
-            // 위 예시처럼 GitHub에서 복사한 '진짜 음악 주소'를 넣어주세요.
-            
+            // 위 예시처럼 GitHub에서 복사한 '진짜 음악 주소'를 넣어주세요.           
             { 
               title: "1장 만복의 근원 하나님",
               url: "https://raw.githubusercontent.com/ktbghb/ym-hymn-app/main/1.mp3" 
