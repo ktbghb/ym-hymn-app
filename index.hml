@@ -60,36 +60,35 @@
             //   url: "https://raw.githubusercontent.com/사용자아이디/저장소이름/main/파일명.mp3" 
             // },
             // 위 예시처럼 GitHub에서 복사한 '진짜 음악 주소'를 넣어주세요.           
-            { 
-              title: "1장 만복의 근원 하나님",
-              url: "https://raw.githubusercontent.com/ktbghb/ym-hymn-app/main/1.mp3" 
-            },
-            { 
-              title: "2장 찬양 성부 성자 성령", 
-              url: "https://raw.githubusercontent.com/ktbghb/ym-hymn-app/main/2.mp3" 
-            },
-            { 
-              title: "3장 이 천지간 만물들아",
-              url: "https://raw.githubusercontent.com/ktbghb/ym-hymn-app/main/3.mp3" 
-            },
-            { 
-              title: "4장 (성부 성자와 성령)", 
-              url: "https://raw.githubusercontent.com/ktbghb/ym-hymn-app/main/4.mp3" 
-            },
-            { 
-              title: "5장 (이 천지간 만물들아)", 
-              url: "https://raw.githubusercontent.com/ktbghb/ym-hymn-app/main/5.mp3" 
-            },
-             { 
-              title: "6장 (목소리 높여서)", 
-              url: "https://raw.githubusercontent.com/ktbghb/ym-hymn-app/main/6.mp3" 
-            },
-             { 
-              title: "7장 (성부 성자 성령)",
-              url: "https://raw.githubusercontent.com/ktbghb/ym-hymn-app/main/7.mp3" 
-            },           
-        ];
-
+    { 
+      title: "1장 만복의 근원 하나님", 
+      url: "https://raw.githubusercontent.com/ktbghb/ym-hymn-app/main/1.mp3" 
+    },
+    { 
+      title: "2장 찬양 성부 성자 성령", 
+      url: "https://raw.githubusercontent.com/ktbghb/ym-hymn-app/main/2.mp3" 
+    },
+    { 
+      title: "3장 이 천지간 만물들아", 
+      url: "https://raw.githubusercontent.com/ktbghb/ym-hymn-app/main/3.mp3" 
+    },
+    { 
+      title: "4장 성부 성자와 성령", 
+      url: "https://raw.githubusercontent.com/ktbghb/ym-hymn-app/main/4.mp3" 
+    },
+    { 
+      title: "5장 이 천지간 만물들아", 
+      url: "https://raw.githubusercontent.com/ktbghb/ym-hymn-app/main/5.mp3" 
+    },
+     { 
+      title: "6장 목소리 높여서", 
+      url: "https://raw.githubusercontent.com/ktbghb/ym-hymn-app/main/6.mp3" 
+    },
+     { 
+      title: "7장 성부 성자 성령", 
+      url: "https://raw.githubusercontent.com/ktbghb/ym-hymn-app/main/7.mp3" 
+    },           
+];
         // --- 여기부터는 앱을 동작하게 하는 코드입니다. 수정하지 않아도 괜찮아요. ---
 
         const audioPlayer = document.getElementById('audio-player');
