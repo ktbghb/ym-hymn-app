@@ -28,7 +28,7 @@
         
         <!-- 1. 앱 제목 부분 -->
         <header class="bg-blue-600 text-white p-6">
-            <h1 class="text-2xl font-bold text-center">영미네 찬송가 Player</h1>
+            <h1 class="text-2xl font-bold text-center">영미 찬송가 Player</h1>
         </header>
 
         <!-- 2. 음악 플레이어 화면 부분 -->
