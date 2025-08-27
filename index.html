@@ -25,7 +25,7 @@
 </head>
 <body class="bg-white lg:bg-gray-100 lg:flex lg:items-center lg:justify-center">
     <!-- 스마트폰 화면 높이 문제 해결 및 데스크톱 크기 확대 -->
-    <div class="w-full h-screen flex flex-col bg-white lg:max-w-2xl lg:h-[95vh] lg:my-8 lg:rounded-2xl lg:shadow-lg">
+    <div class="w-full min-h-screen flex flex-col bg-white lg:max-w-2xl lg:h-[95vh] lg:my-8 lg:rounded-2xl lg:shadow-lg">
         <!-- 헤더 부분: 크기 고정 -->
         <header class="bg-purple-800 text-white p-6 flex items-center justify-center space-x-4 flex-shrink-0">
             <img src="header-image.jpg" alt="Header Image" class="w-16 h-16 rounded-full border-2 border-white">
@@ -58,7 +58,9 @@
             <button id="close-modal-btn" class="absolute top-2 right-2 text-gray-500 hover:text-black">
                 <span class="material-icons text-4xl">close</span>
             </button>
-            <img id="sheet-music-image" src="" alt="악보" class="w-full h-auto" onerror="this.style.display='none'; alert('악보 이미지를 찾을 수 없습니다. 파일 이름을 확인해주세요 (예: 1.JPG)');">
+            <img id="sheet-music-image" src="" alt="악보" class="w-full h-auto">
+            <!-- 악보 로딩 실패 시 표시될 메시지 -->
+            <p id="sheet-music-error" class="hidden text-red-500 text-center p-8 text-xl">악보 이미지를 불러올 수 없습니다.<br>파일이 저장소에 있는지, 이름이 올바른지 확인해주세요 (예: 1.JPG).</p>
         </div>
     </div>
 
@@ -216,6 +218,7 @@
         const sheetMusicModal = document.getElementById('sheet-music-modal');
         const sheetMusicImage = document.getElementById('sheet-music-image');
         const closeModalBtn = document.getElementById('close-modal-btn');
+        const sheetMusicError = document.getElementById('sheet-music-error');
 
         let currentPlayingItem = null;
 
@@ -256,9 +259,21 @@
             const song = songs[index];
             currentSongTitleElement.textContent = song.title; 
             
-            // 악보 이미지 설정 및 표시
+            // 악보 이미지 상태 초기화 및 로드 이벤트 핸들러 설정
+            sheetMusicImage.style.display = 'block';
+            sheetMusicError.classList.add('hidden');
+
+            sheetMusicImage.onload = () => {
+                sheetMusicImage.style.display = 'block';
+                sheetMusicError.classList.add('hidden');
+            };
+            sheetMusicImage.onerror = () => {
+                sheetMusicImage.style.display = 'none';
+                sheetMusicError.classList.remove('hidden');
+            };
+
+            // 악보 이미지 설정 및 모달 표시
             sheetMusicImage.src = song.sheetUrl;
-            sheetMusicImage.style.display = 'block'; // onerror로 숨겨졌을 경우를 대비해 다시 보이게 함
             sheetMusicModal.classList.remove('hidden');
 
             if (audioPlayer.src !== song.url) {
