@@ -23,9 +23,9 @@
         #playlist::-webkit-scrollbar-thumb:hover { background: #555; }
     </style>
 </head>
-<body class="bg-white md:bg-gray-100 md:flex md:items-center md:justify-center min-h-screen">
+<body class="bg-white lg:bg-gray-100 lg:flex lg:items-center lg:justify-center min-h-screen">
     <!-- 스마트폰에서는 전체 화면으로, 데스크톱에서는 카드 형태로 보이도록 수정 -->
-    <div class="w-full h-screen flex flex-col bg-white md:max-w-md md:h-auto md:my-8 md:rounded-2xl md:shadow-lg">
+    <div class="w-full h-screen flex flex-col bg-white lg:max-w-md lg:h-auto lg:my-8 lg:rounded-2xl lg:shadow-lg">
         <!-- 헤더 부분: 크기 고정 -->
         <header class="bg-purple-800 text-white p-4 flex items-center justify-center space-x-3 flex-shrink-0">
             <img src="header-image.jpg" alt="Header Image" class="w-12 h-12 rounded-full border-2 border-white">
@@ -270,6 +270,13 @@
 
             renderPlaylist(filteredSongs);
         });
+
+
+        // 페이지가 로드되면 바로 목록을 보여줍니다.
+        renderPlaylist(songs);
+    </script>
+</body>
+</html>
 
 
         // 페이지가 로드되면 바로 목록을 보여줍니다.
