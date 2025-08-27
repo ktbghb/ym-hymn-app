@@ -37,11 +37,11 @@
             <!-- 검색창 추가 -->
             <div class="relative mb-4">
                 <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
-                <input type="text" id="search-input" placeholder="찬송가 검색 (번호 또는 제목)" class="w-full p-3 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                <input type="text" id="search-input" placeholder="찬송가 검색 (번호 또는 제목)" class="w-full p-3 pl-10 text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
             </div>
             
             <div class="bg-gray-200 rounded-lg p-4 text-center mb-4">
-                <p class="text-gray-600">현재 재생 중</p>
+                <p class="text-gray-600 text-sm">현재 재생 중</p>
                 <h2 id="current-song-title" class="text-xl font-bold text-gray-800 truncate">선택된 곡 없음</h2>
             </div>
             <audio id="audio-player" class="w-full" controls></audio>
@@ -216,7 +216,7 @@
             songList.forEach(song => {
                 const originalIndex = songs.indexOf(song);
                 const songItem = document.createElement('div');
-                songItem.className = 'p-4 mb-2 rounded-lg cursor-pointer hover:bg-gray-200 transition-all flex items-center justify-between';
+                songItem.className = 'p-4 mb-2 text-lg rounded-lg cursor-pointer hover:bg-gray-200 transition-all flex items-center justify-between';
                 songItem.innerHTML = `<span>${song.title}</span><i class="material-icons text-gray-400">play_circle_outline</i>`;
                 songItem.addEventListener('click', () => playSong(originalIndex, songItem));
                 playlistElement.appendChild(songItem);
@@ -270,13 +270,6 @@
 
             renderPlaylist(filteredSongs);
         });
-
-
-        // 페이지가 로드되면 바로 목록을 보여줍니다.
-        renderPlaylist(songs);
-    </script>
-</body>
-</html>
 
 
         // 페이지가 로드되면 바로 목록을 보여줍니다.
