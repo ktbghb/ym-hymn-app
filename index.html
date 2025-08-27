@@ -23,7 +23,7 @@
         #playlist::-webkit-scrollbar-thumb:hover { background: #555; }
     </style>
 </head>
-<body class="bg-white lg:bg-gray-100 lg:flex lg:items-center lg:justify-center min-h-screen">
+<body class="bg-white lg:bg-gray-100 lg:flex lg:items-center lg:justify-center">
     <!-- 스마트폰 화면 높이 문제 해결 및 데스크톱 크기 확대 -->
     <div class="w-full min-h-screen flex flex-col bg-white lg:max-w-2xl lg:h-[95vh] lg:my-8 lg:rounded-2xl lg:shadow-lg">
         <!-- 헤더 부분: 크기 고정 -->
@@ -44,12 +44,26 @@
                 <p class="text-gray-600 text-lg">현재 재생 중</p>
                 <h2 id="current-song-title" class="text-3xl font-bold text-gray-800 truncate">선택된 곡 없음</h2>
             </div>
-            <audio id="audio-player" class="w-full" controls></audio>
+            <!-- 오디오 플레이어 크기 확대 -->
+            <audio id="audio-player" class="w-full transform scale-125 origin-center" controls></audio>
         </div>
 
         <!-- 찬송가 목록: 남은 공간을 모두 차지하고 스크롤되도록 수정 -->
         <div id="playlist" class="px-8 pb-8 flex-grow overflow-y-auto"></div>
     </div>
+
+    <!-- 악보 표시를 위한 모달 창 -->
+    <div id="sheet-music-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg p-4 max-w-4xl max-h-full overflow-auto relative">
+            <button id="close-modal-btn" class="absolute top-2 right-2 text-gray-500 hover:text-black">
+                <span class="material-icons text-4xl">close</span>
+            </button>
+            <img id="sheet-music-image" src="" alt="악보" class="w-full h-auto">
+            <!-- 악보 로딩 실패 시 표시될 메시지 -->
+            <p id="sheet-music-error" class="hidden text-red-500 text-center p-8 text-xl">악보 이미지를 불러올 수 없습니다.<br>파일이 저장소에 있는지, 이름이 올바른지 확인해주세요 (예: 1.JPG).</p>
+        </div>
+    </div>
+
 
     <script>
         // 645장 찬송가 전체 제목 목록
@@ -193,14 +207,32 @@
             songs.push({
                 // hymnTitles 배열에서 제목을 가져옵니다. (i-1인 이유는 배열이 0부터 시작하기 때문)
                 title: hymnTitles[i-1] || `${i}장`, // 만약 제목이 없으면 'i장'으로 표시
-                url: `${baseUrl}${i}.mp3`
+                url: `${baseUrl}${i}.mp3`,
+                sheetUrl: `${baseUrl}${i}.JPG` // 악보 URL 확장자를 대문자 JPG로 수정
             });
         }
         
         const audioPlayer = document.getElementById('audio-player');
         const playlistElement = document.getElementById('playlist');
         const currentSongTitleElement = document.getElementById('current-song-title');
+        const sheetMusicModal = document.getElementById('sheet-music-modal');
+        const sheetMusicImage = document.getElementById('sheet-music-image');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const sheetMusicError = document.getElementById('sheet-music-error');
+
         let currentPlayingItem = null;
+
+        // 노래 재생이 끝나면 초기화하는 기능 수정
+        audioPlayer.addEventListener('ended', () => {
+            currentSongTitleElement.textContent = "선택된 곡 없음";
+            if (currentPlayingItem) {
+                currentPlayingItem.classList.remove('playing');
+                currentPlayingItem.querySelector('i').textContent = 'play_circle_outline';
+                currentPlayingItem = null;
+            }
+            // 악보 모달도 닫기
+            sheetMusicModal.classList.add('hidden');
+        });
 
         audioPlayer.addEventListener('error', () => {
             console.error(`오류: '${currentSongTitleElement.textContent}' 파일을 불러올 수 없습니다. GitHub에 파일이 있는지, 이름이 올른지 확인해주세요.`);
@@ -216,7 +248,7 @@
             songList.forEach(song => {
                 const originalIndex = songs.indexOf(song);
                 const songItem = document.createElement('div');
-                songItem.className = 'p-6 mb-2 text-2xl rounded-lg cursor-pointer hover:bg-gray-200 transition-all flex items-center justify-between';
+                songItem.className = 'p-6 mb-2 text-2xl font-bold rounded-lg cursor-pointer hover:bg-gray-200 transition-all flex items-center justify-between';
                 songItem.innerHTML = `<span>${song.title}</span><i class="material-icons text-gray-400">play_circle_outline</i>`;
                 songItem.addEventListener('click', () => playSong(originalIndex, songItem));
                 playlistElement.appendChild(songItem);
@@ -225,8 +257,25 @@
 
         function playSong(index, songItem) {
             const song = songs[index];
-            currentSongTitleElement.textContent = song.title; // 제목을 먼저 업데이트
+            currentSongTitleElement.textContent = song.title; 
             
+            // 악보 이미지 상태 초기화 및 로드 이벤트 핸들러 설정
+            sheetMusicImage.style.display = 'block';
+            sheetMusicError.classList.add('hidden');
+
+            sheetMusicImage.onload = () => {
+                sheetMusicImage.style.display = 'block';
+                sheetMusicError.classList.add('hidden');
+            };
+            sheetMusicImage.onerror = () => {
+                sheetMusicImage.style.display = 'none';
+                sheetMusicError.classList.remove('hidden');
+            };
+
+            // 악보 이미지 설정 및 모달 표시
+            sheetMusicImage.src = song.sheetUrl;
+            sheetMusicModal.classList.remove('hidden');
+
             if (audioPlayer.src !== song.url) {
                 audioPlayer.src = song.url;
             }
@@ -238,11 +287,13 @@
                 songItem.classList.add('playing');
                 songItem.querySelector('i').textContent = 'pause_circle_outline';
                 currentPlayingItem = songItem;
-            }).catch(e => {
-                // play()가 실패하면 onerror 이벤트가 발생하므로 여기서는 콘솔에만 기록합니다.
-                console.error("재생 시작 오류:", e);
-            });
+            }).catch(e => console.error("재생 오류:", e));
         }
+
+        // 모달 닫기 버튼 이벤트
+        closeModalBtn.addEventListener('click', () => {
+            sheetMusicModal.classList.add('hidden');
+        });
 
         // 검색 기능 추가
         const searchInput = document.getElementById('search-input');
@@ -250,7 +301,7 @@
             const searchTerm = event.target.value.trim();
             
             if (!searchTerm) {
-                renderPlaylist(songs); // 검색어가 없으면 전체 목록으로
+                renderPlaylist(songs); 
                 return;
             }
 
@@ -258,10 +309,7 @@
                 const title = song.title.toLowerCase();
                 const term = searchTerm.toLowerCase();
                 
-                // 제목에 검색어가 포함되어 있는지 확인 (예: "만복")
                 const titleMatch = title.includes(term);
-
-                // 제목의 시작 부분(장 번호)이 검색어와 일치하는지 확인 (예: "1"이 "1장", "10장" 등과 일치)
                 const numberPart = song.title.split('장')[0];
                 const numberMatch = numberPart.startsWith(term);
 
