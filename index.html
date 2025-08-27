@@ -29,27 +29,27 @@
         <!-- 헤더 부분: 크기 고정 -->
         <header class="bg-purple-800 text-white p-6 flex items-center justify-center space-x-4 flex-shrink-0">
             <img src="header-image1.jpg" alt="Header Image" class="w-16 h-16 rounded-full border-2 border-white">
-            <h1 class="text-4xl font-bold">영미의 찬송가 PLAYER</h1>
+            <h1 class="text-3xl font-bold">영미의 찬송가 PLAYER</h1>
         </header>
         
         <!-- 검색 및 플레이어 부분: 크기 고정 -->
-        <div class="p-8 flex-shrink-0">
+        <div class="p-6 flex-shrink-0">
             <!-- 검색창 크기 확대 -->
             <div class="relative mb-6">
-                <span class="material-icons absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 text-3xl">search</span>
-                <input type="text" id="search-input" placeholder="찬송가 검색 (번호 또는 제목)" class="w-full p-5 pl-16 text-2xl border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                <span class="material-icons absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-2xl">search</span>
+                <input type="text" id="search-input" placeholder="찬송가 검색 (번호 또는 제목)" class="w-full p-4 pl-14 text-xl border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
             </div>
             
-            <div class="bg-gray-200 rounded-lg p-5 text-center mb-6">
-                <p class="text-gray-600 text-lg">현재 재생 중</p>
-                <h2 id="current-song-title" class="text-3xl font-bold text-gray-800 truncate">선택된 곡 없음</h2>
+            <div class="bg-gray-200 rounded-lg p-4 text-center mb-6">
+                <p class="text-gray-600 text-base">현재 재생 중</p>
+                <h2 id="current-song-title" class="text-2xl font-bold text-gray-800 truncate">선택된 곡 없음</h2>
             </div>
             <!-- 오디오 플레이어 크기 확대 -->
-            <audio id="audio-player" class="w-full transform scale-125 origin-center" controls></audio>
+            <audio id="audio-player" class="w-full transform scale-110 origin-center" controls></audio>
         </div>
 
         <!-- 찬송가 목록: 남은 공간을 모두 차지하고 스크롤되도록 수정 -->
-        <div id="playlist" class="px-8 pb-8 flex-grow overflow-y-auto"></div>
+        <div id="playlist" class="px-6 pb-6 flex-grow overflow-y-auto"></div>
     </div>
 
     <!-- 악보 표시를 위한 모달 창 -->
