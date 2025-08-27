@@ -34,10 +34,10 @@
         
         <!-- 검색 및 플레이어 부분: 크기 고정 -->
         <div class="p-8 flex-shrink-0">
-            <!-- 검색창 추가 -->
+            <!-- 검색창 크기 확대 -->
             <div class="relative mb-6">
-                <span class="material-icons absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-2xl">search</span>
-                <input type="text" id="search-input" placeholder="찬송가 검색 (번호 또는 제목)" class="w-full p-4 pl-12 text-xl border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                <span class="material-icons absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 text-3xl">search</span>
+                <input type="text" id="search-input" placeholder="찬송가 검색 (번호 또는 제목)" class="w-full p-5 pl-16 text-2xl border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
             </div>
             
             <div class="bg-gray-200 rounded-lg p-5 text-center mb-6">
@@ -250,7 +250,7 @@
             const searchTerm = event.target.value.trim();
             
             if (!searchTerm) {
-                renderPlaylist(songs.slice(0, 7)); // 검색어가 없으면 초기 7개 목록으로
+                renderPlaylist(songs); // 검색어가 없으면 전체 목록으로
                 return;
             }
 
@@ -272,8 +272,8 @@
         });
 
 
-        // 페이지가 로드되면 처음 7개의 목록만 보여줍니다.
-        renderPlaylist(songs.slice(0, 7));
+        // 페이지가 로드되면 전체 목록을 보여줍니다.
+        renderPlaylist(songs);
     </script>
 </body>
 </html>
